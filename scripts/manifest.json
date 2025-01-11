@@ -1,0 +1,10 @@
+{
+    "name": "AdaptAble",
+    "description": "Use AI to adapt to each user for more accessible websites",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+      "default_popup": "main.html",
+      "default_icon": "icon.png"
+    }
+  }
