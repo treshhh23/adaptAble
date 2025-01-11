@@ -24,7 +24,7 @@ const db = new sqlite3.Database(dbFilePath, (err) => {
 
 // 3) Create a table for storing test data
 //   - This example table is named 'test_entries' with sample columns.
-function initDatabase() {
+export function initDatabase() {
   db.serialize(() => {
     // Example table: user_interactions
     db.run(`
@@ -43,7 +43,7 @@ function initDatabase() {
 }
 
 // 4) Insert sample data
-function insertSampleData() {
+export function insertSampleData() {
   // We'll do this in a serialized way to ensure it completes in sequence
   db.serialize(() => {
     const stmt = db.prepare(`INSERT INTO user_interactions (user_id, zoom, font_type, contrast) VALUES (?, ?, ?, ?)`);
@@ -61,7 +61,7 @@ function insertSampleData() {
 }
 
 // 5) Read and print out the data
-function readData() {
+export function readData() {
   db.all(`SELECT * FROM user_interactions`, (err, rows) => {
     if (err) {
       return console.error('[ERROR] Could not retrieve data:', err.message);
@@ -72,7 +72,7 @@ function readData() {
 }
 
 // 6) Close the database connection
-function closeDatabase() {
+export function closeDatabase() {
   db.close((err) => {
     if (err) {
       return console.error('[ERROR] Closing database:', err.message);

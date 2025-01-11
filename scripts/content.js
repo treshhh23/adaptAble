@@ -7,6 +7,10 @@
  * 4) Applies predicted layout (optional).
  ******************************************************************************/
 
+import { initDatabase } from "dbInit.js";
+import { readData } from "dbInit.js";
+import { closeDatabase } from "dbInit.js";
+
 /////////////////////
 // Global Variables //
 /////////////////////
@@ -22,6 +26,7 @@ let isReadableFont = false;   // Are we currently using the readable font?
 
 // Sample final "layout profile" logic: 0=none, 1=high contrast, 2=readable font
 
+/*
 //////////////////////////
 // 1) Initialize sql.js //
 //////////////////////////
@@ -60,6 +65,8 @@ function logInteraction(contrastToggles, fontToggles, timeOnPage, layoutProfile)
     layoutProfile
   });
 }
+
+*/
 
 function getAllData() {
   const stmt = db.prepare("SELECT * FROM user_interactions");
