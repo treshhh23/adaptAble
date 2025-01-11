@@ -77,3 +77,6 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
+.high-contrast * { background-color: #000 !important; color: #fff !important; } 
+.readable-font * { font-family: "OpenDyslexic", sans-serif !important }

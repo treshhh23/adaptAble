@@ -8,6 +8,7 @@
  ******************************************************************************/
 
 import { initDatabase } from "dbInit.js";
+import { logInteraction } from "./dbInit";
 import { readData } from "dbInit.js";
 import { closeDatabase } from "dbInit.js";
 
@@ -182,6 +183,10 @@ window.addEventListener('keydown', (e) => {
   // SHIFT I => Train model
   if (e.shiftKey && e.key.toUpperCase() === 'I') {
     trainModel(model);
+  }
+
+  if (e.shiftKey && e.key === "9") {
+    readData();
   }
 
   // SHIFT P => Predict & Apply

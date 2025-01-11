@@ -30,11 +30,10 @@ export function initDatabase() {
     db.run(`
       CREATE TABLE IF NOT EXISTS user_interactions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id TEXT,
-        zoom INTEGER,
-        font_type TEXT,
-        contrast INTEGER
-        
+        toggleContrastCount INT,
+        toggleFontCount INT,
+        timeOnPage INT,
+        layoutProfile INT        
       )
     `);
     //Add more data types later
@@ -42,6 +41,7 @@ export function initDatabase() {
 
 }
 
+/*
 // 4) Insert sample data
 export function insertSampleData() {
   // We'll do this in a serialized way to ensure it completes in sequence
@@ -53,6 +53,22 @@ export function insertSampleData() {
     stmt.run(['Bob', 100, "arial", 1]);
     stmt.run(['Charlie', 150, "times new roman", 1]);
     stmt.run(["default_user", 100, "arial", 0])
+
+    stmt.finalize();
+
+    console.log('[INFO] Sample data inserted.');
+  });
+}
+*/
+
+export function logInteraction(contrastToggles, fontToggles, timeOnPage, layoutProfile) {
+  db.serialize(() => {
+    const stmt = db.prepare(`INSERT INTO user_interactions
+    (toggleContrastCount, toggleFontCount, timeOnPage, layoutProfile)
+    VALUES (?, ?, ?, ?)`);
+
+    // Example: Insert a few rows
+    stmt.run([contrastToggles, fontToggles, timeOnPage, layoutProfile]);
 
     stmt.finalize();
 
