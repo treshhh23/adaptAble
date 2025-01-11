@@ -5,6 +5,8 @@
     "manifest_version": 3,
     "action": {
       "default_popup": "main.html",
-      "default_icon": "images/icon.png"
+      "default_icon": "images/icon.png",
+      "default_width": 340,
+      "default_height": 300
     }
   }
