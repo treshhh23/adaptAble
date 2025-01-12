@@ -1,13 +1,21 @@
-document.getElementById('high-contrast').addEventListener('click', () => {
-    // Query the active tab
-    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-      const activeTab = tabs[0];
-      // Send a message to content.js in the active tab
-      chrome.tabs.sendMessage(activeTab.id, {action: "toggleHighContrast"}, (response) => {
-        console.log(response.status);
-      });
-    });
+const sliderContrast = document.getElementById('high-contrast');
+
+sliderContrast.addEventListener('input', (event) => {
+  const contrastValue = event.target.value;
+
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const activeTab = tabs[0];
+
+    chrome.tabs.sendMessage(
+      activeTab.id, 
+      { action: 'setHighContrast', value: contrastValue },
+      (response) => {
+        console.log(response?.status);
+      }
+    );
   });
+});
+
   
   document.getElementById("font-type").addEventListener('click', () => {
     // Query the active tab
@@ -20,16 +28,59 @@ document.getElementById('high-contrast').addEventListener('click', () => {
     });
   });
 
-  document.getElementById("browser-zoom").addEventListener('click', () => {
-    // Query the active tab
-    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+  const sliderZoom = document.getElementById('browser-zoom');
+
+  sliderContrast.addEventListener('input', (event) => {
+    const contrastValue = event.target.value;
+  
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0];
-      // Send a message to content.js in the active tab
-      chrome.tabs.sendMessage(activeTab.id, {action: "toggleZoom"}, (response) => {
-        console.log(response.status);
-      });
+  
+      chrome.tabs.sendMessage(
+        activeTab.id, 
+        { action: 'toggleZoom', value: contrastValue },
+        (response) => {
+          console.log(response?.status);
+        }
+      );
     });
   });
+
+const sliderSpacing = document.getElementById('text-spacing');
+
+sliderContrast.addEventListener('input', (event) => {
+  const contrastValue = event.target.value;
+
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const activeTab = tabs[0];
+
+    chrome.tabs.sendMessage(
+      activeTab.id, 
+      { action: 'slideText', value: contrastValue },
+      (response) => {
+        console.log(response?.status);
+      }
+    );
+  });
+});
+
+const sliderAlign = document.getElementById('line-spacing');
+
+sliderContrast.addEventListener('input', (event) => {
+  const contrastValue = event.target.value;
+
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const activeTab = tabs[0];
+
+    chrome.tabs.sendMessage(
+      activeTab.id, 
+      { action: 'slideAlign', value: contrastValue },
+      (response) => {
+        console.log(response?.status);
+      }
+    );
+  });
+});
 
 
   
