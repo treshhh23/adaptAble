@@ -1,25 +1,3 @@
-/******************************************************************************
- * content.js
- *
- * Features:
- * 1) Listens for Ctrl + "+" and Ctrl + "-" to detect/log browser zoom usage.
- * 2) Provides separate functions to toggle High Contrast & Readable Font.
- * 3) Stores interaction data (zoom usage, time on page, etc.) in an in-memory
- *    SQLite DB (sql.js), no TensorFlow usage.
- ******************************************************************************/
-
-/////////////////////
-// Global Variables //
-/////////////////////
-db = null;        // SQLite Database instance (in-memory via sql.js)
-let startTime = Date.now();
-
-
-// Track how often user uses Ctrl + or Ctrl - (zoom actions)
-let zoomInCount = 0;
-let zoomOutCount = 0;
-
-
 // Toggle states for High Contrast & Readable Font
 let isHighContrast = false;
 let isReadableFont = false;
@@ -38,55 +16,40 @@ const Add_Custom_Style = (css, id) => {
   styleElement.innerHTML = css; // Update the CSS content
 };
 
-/////////////////////////////////////////////
-// 1) Initialize sql.js & Create a Table  //
-/////////////////////////////////////////////
 async function initDatabase() {
-  // Load sql.js from the WebAssembly file
-  // (Ensure "sql-wasm.wasm" is in your extension and declared in manifest.json)
   const SQL = await initSqlJs({
     locateFile: file => chrome.runtime.getURL('sql-wasm.wasm')
   });
 
-
-  // Create an in-memory database
   db = new SQL.Database();
 
-
-  // Create a table to store user interactions
   db.run(`
     CREATE TABLE IF NOT EXISTS user_interactions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      zoomInCount INT,
-      zoomOutCount INT,
-      timeOnPage INT
+      website TEXT,
+      contrast INT,
+      zoom INT,
+      font INT,
+      spacing INT,
+      align INT
     )
   `);
-
 
   console.log("[Accessibility] In-memory SQLite DB initialized.");
 }
 
-
-////////////////////////////
-// 2) Logging Interactions //
-////////////////////////////
-function logInteraction(zoomIn, zoomOut, timeOnPage) {
-  // Insert basic info about user's zoom usage, time on page
+function logInteraction(website, contrast, zoom, font, spacing, align) {
   const stmt = db.prepare(`
     INSERT INTO user_interactions
-    (zoomInCount, zoomOutCount, timeOnPage)
-    VALUES (?, ?, ?)
+    (website, contrast, zoom, font, spacing, align)
+    VALUES (?, ?, ?, ?, ?, ?)
   `);
-  stmt.run([zoomIn, zoomOut, timeOnPage]);
+  stmt.run([website, contrast, zoom, font, spacing, align]);
   stmt.free();
   console.log("[Accessibility] Interaction logged:", {
-    zoomIn,
-    zoomOut,
-    timeOnPage
+    website, contrast, zoom, font, spacing, align
   });
 }
-
 
 function getAllData() {
   const stmt = db.prepare("SELECT * FROM user_interactions");
@@ -95,20 +58,10 @@ function getAllData() {
     rows.push(stmt.getAsObject());
   }
   stmt.free();
-  return rows;
+  for (x in rows) {
+    console.log(x);
+  }
 }
-
-
-//////////////////////////////////////////////////////////////
-// 3) Functions to Toggle High Contrast & Readable Font    //
-//    (Called separately, e.g., from popup or background)  //
-//////////////////////////////////////////////////////////////
-
-
-/**
- * Toggle high contrast on/off.
- * For example, you might call this from the extension's popup.js.
- */
 
 function Remove_Custom_Style(id) {
   const styleElement = document.getElementById(id);
@@ -124,17 +77,20 @@ function toggleHighContrast() {
   document.documentElement.classList.toggle('high-contrast', isHighContrast);
   console.log("[Accessibility] High Contrast is now:", isHighContrast);
 
+  logInteraction(site, isHighContrast, 0, 0, 0, 0);
+  getAllData();
+
   if (isHighContrast) {
     Add_Custom_Style(`
       * {
           color: #FFFFFF !important;
           background-color: #121212 !important; /* Dark mode background */
       }
+    
 
-
-  `, "__contrast")
+  `, "__contrast");
   } else {
-    Remove_Custom_Style("__contrast")
+    Remove_Custom_Style("__contrast");
   }
 }
 
@@ -146,13 +102,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-
-
-
-/**
- * Toggle a more readable font on/off.
- * Also called from popup or background script as needed.
- */
 function toggleReadableFont() {
   isReadableFont = !isReadableFont;
   document.documentElement.classList.toggle('readable-font', isReadableFont);
@@ -204,41 +153,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-
-
-///////////////////////////////////////////////////////////
-// 4) Key Listener: ONLY for Ctrl +/− (Browser Zoom)     //
-///////////////////////////////////////////////////////////
-window.addEventListener('keydown', (e) => {
-  // Detect Ctrl + '+'
-  if (e.ctrlKey && e.key === '+'|| e.key === '=') {
-    zoomInCount++;
-    console.log(`[Accessibility] Detected browser zoom in. Count: ${zoomInCount}`);
-  }
-
-
-  // Detect Ctrl + '-'
-  if (e.ctrlKey && e.key === '-') {
-    zoomOutCount++;
-    console.log(`[Accessibility] Detected browser zoom out. Count: ${zoomOutCount}`);
-  }
-});
-
-
-////////////////////////////////////////////////////////
-// 5) Log on Page Unload: store zoom data in database //
-////////////////////////////////////////////////////////
-window.addEventListener('beforeunload', () => {
-  const timeOnPage = Math.floor((Date.now() - startTime) / 1000);
-  logInteraction(zoomInCount, zoomOutCount, timeOnPage);
-});
-
-
-///////////////////////////
-// 6) Initialization Flow //
-///////////////////////////
 (async function initAll() {
   await initDatabase();
-  console.log("[Accessibility] content.js ready. Tracking Ctrl +/− for zoom usage.");
-  console.log("[Accessibility] Call toggleHighContrast() / toggleReadableFont() as needed.");
 })();

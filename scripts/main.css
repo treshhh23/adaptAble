@@ -25,6 +25,8 @@
     text-align: center;
     margin-bottom: 5px;
     color: #2196F3;
+    animation: fadeInDown 0.7s ease-out;
+    animation-fill-mode: forwards;
     }
     
     .subtitle {
@@ -32,17 +34,22 @@
     text-align: center;
     margin-bottom: 20px;
     color: #757575;
+    animation: fadeInUp 0.7s ease-out 0.3s backwards;
     }
     
     .option-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 0;
     }
     
     .option {
-    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
     border-bottom: 1px solid #e0e0e0;
+    height: 80px;
     }
     
     .option:last-child {
@@ -56,6 +63,7 @@
     justify-content: space-between;
     width: 100%;
     cursor: pointer;
+    height: 100%;
     }
     
     .switch input {
@@ -66,6 +74,181 @@
     }
     
     .slider {
+    -webkit-appearance: none;
+    width: 120px; /* Set a fixed width for all sliders */
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    }
+    
+    .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #2196F3;
+    cursor: pointer;
+    }
+    
+    .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #2196F3;
+    cursor: pointer;
+    }
+    
+    .option-text {
+    font-size: 16px;
+    font-weight: 400;
+    position: relative;
+    overflow: hidden;
+    }
+    
+    /* Styles for each option when active */
+    .high-contrast.active {
+    color: #2196F3;
+    text-shadow: 0 0 3px #fff, 0 0 5px #fff;
+    font-weight: 700;
+    }
+    
+    .browser-zoom.active {
+    font-size: 18px;
+    color: #2196F3;
+    }
+    
+    .font-type.active {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.5px;
+    color: #2196F3;
+    }
+    
+    .text-spacing.active {
+    color: #2196F3;
+    letter-spacing: 2px;
+    transition: letter-spacing 0.3s ease;
+    }
+    
+    .line-spacing.active {
+    color: #2196F3;
+    line-height: 1.5;
+    transition: line-height 0.3s ease;
+    }
+    
+    #font-type:checked ~ .font-type {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.5px;
+    color: #2196F3;
+    animation: emphasizeFontType 0.5s ease-in-out forwards;
+    }
+    
+    /* General animation for all options */
+    input:checked ~ .option-text::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #2196F3;
+    animation: underline 0.3s ease-in-out forwards;
+    }
+    
+    @keyframes emphasizeHighContrast {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1.1); }
+    }
+    
+    @keyframes emphasizeBrowserZoom {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1.1); }
+    }
+    
+    @keyframes emphasizeFontType {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1.1); }
+    }
+    
+    @keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    }
+    
+    @keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    }
+    
+    @keyframes subtleNeon {
+    from {
+        text-shadow: 0 0 1px #fff, 0 0 2px #2196F3;
+    }
+    to {
+        text-shadow: 0 0 0.5px #fff, 0 0 1px #2196F3;
+    }
+    }
+    
+    .neon-text {
+    color: #2196F3;
+    text-shadow: 0 0 1px rgba(33, 150, 243, 0.3), 0 0 2px rgba(33, 150, 243, 0.3), 0 0 4px rgba(33, 150, 243, 0.3);
+    transition: text-shadow 0.3s ease;
+    }
+    
+    .option-text.neon-text {
+    font-weight: 500;
+    text-shadow: 0 0 1px rgba(33, 150, 243, 0.2), 0 0 2px rgba(33, 150, 243, 0.2);
+    }
+    
+    @keyframes emphasizeSpacing {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+    }
+      
+
+.font-dropdown {
+margin-top: 15px;
+font-size: 14px;
+padding: 10px;
+border-radius: 8px;
+border: 1px solid #ddd;
+background-color: #fff;
+color: #333;
+outline: none;
+width: 100%;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+cursor: pointer;
+transition: border-color 0.2s ease;
+}
+
+.font-dropdown:focus {
+border-color: #2196F3;
+}
+
+.checkbox {
     position: relative;
     width: 50px;
     height: 28px;
@@ -74,7 +257,7 @@
     border-radius: 34px;
     }
     
-    .slider:before {
+    .checkbox:before {
     position: absolute;
     content: "";
     height: 20px;
@@ -86,47 +269,10 @@
     border-radius: 50%;
     }
     
-    input:checked + .slider {
+    input:checked + .checkbox {
     background-color: #2196F3;
     }
     
-    input:checked + .slider:before {
+    input:checked + .checkbox:before {
     transform: translateX(22px);
-    }
-    
-    .option-text {
-    font-size: 16px;
-    font-weight: 400;
-    transition: all 0.3s ease;
-    }
-    
-    /* High Contrast animation */
-    #high-contrast:checked ~ .high-contrast {
-    color: #000;
-    text-shadow: 0 0 2px #fff;
-    font-weight: 700;
-    }
-    
-    /* Browser Zoom animation */
-    #browser-zoom:checked ~ .browser-zoom {
-    font-size: 18px;
-    color: #2196F3;
-    }
-    
-    /* Font Type animation */
-    #font-type:checked ~ .font-type {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    }
-    
-    /* General animation for all options */
-    input:checked ~ .option-text {
-    animation: emphasize 0.3s ease-in-out;
-    }
-    
-    @keyframes emphasize {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
     }

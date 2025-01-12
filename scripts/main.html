@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script type="module", src="main.js"></script>
   <link rel="stylesheet" href="main.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=Open+Sans:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
@@ -12,25 +12,37 @@
     <p class="subtitle">Personalize your browsing experience</p>
     <div class="option-container">
       <div class="option">
-        <label class="switch">
-          <input type="checkbox" id="high-contrast">
-          <span class="slider round"></span>
-          <span class="option-text high-contrast">High Contrast</span>
-        </label>
+        <span class="option-text high-contrast">High Contrast</span>
+        <input type="range" id="high-contrast" min="0" max="4" value="0" class="slider">
+      </div>
+      <div class="option">
+        <span class="option-text browser-zoom">Browser Zoom</span>
+        <input type="range" id="browser-zoom" min="0" max="4" value="0" class="slider">
       </div>
       <div class="option">
         <label class="switch">
-          <input type="checkbox" id="browser-zoom">
-          <span class="slider round"></span>
-          <span class="option-text browser-zoom">Browser Zoom</span>
-        </label>
-      </div>
-      <div class="option">
-        <label class="switch">
-          <input type="checkbox" id="font-type">
-          <span class="slider round"></span>
           <span class="option-text font-type">Font Type</span>
+          <input type="checkbox" id="font-type">
+          <span class="checkbox round"></span>
         </label>
+      </div>
+      <div class="option">
+        <label for="font-select" class="option-text">Select Font Style:</label>
+        <select id="font-select" class="font-dropdown">
+          <option value="roboto">Roboto</option>
+          <option value="raleway">Raleway</option>
+          <option value="open-sans">Open Sans</option>
+          <option value="lato">Lato</option>
+          <option value="georgia">Georgia</option>
+        </select>
+      </div>
+      <div class="option">
+        <span class="option-text text-spacing">Text Spacing</span>
+        <input type="range" id="text-spacing" min="0" max="4" value="0" class="slider">
+      </div>
+      <div class="option">
+        <span class="option-text line-spacing">Line Spacing</span>
+        <input type="range" id="line-spacing" min="0" max="4" value="0" class="slider">
       </div>
     </div>
   </div>
