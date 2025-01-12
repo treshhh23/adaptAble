@@ -152,6 +152,116 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 }
 );
 
+function setSpace(spaceValue) {
+  // Convert string to number if needed
+  spaceValue = Number(spaceValue);
+  console.log("[Accessibility] Setting zoom level to:", spaceValue);
+  
+  // For example, update the contrast style based on a given value
+  // (This is just an example. You can customize your style as needed)
+  Add_Custom_Style(`
+    * {
+        word-spacing: ${2 * spaceValue}px;
+    }
+  `, "__space");
+}
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if(request.action === "setSpace") {
+    setSpace(request.value);
+    sendResponse({status: `Space set to ${request.value}`});
+  }
+}
+);
+
+function setAlign(alignValue) {
+  // Convert string to number if needed
+  alignValue = Number(alignValue);
+  console.log("[Accessibility] Setting zoom level to:", alignValue);
+  
+  // For example, update the contrast style based on a given value
+  // (This is just an example. You can customize your style as needed)
+  if (alignValue != 0) {
+    Add_Custom_Style(`
+      * {
+          line-height: ${150 + alignValue * 5}%;
+      }
+    `, "__align");
+  }
+  else {
+    Remove_Custom_Style("__align");
+  }
+}
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if(request.action === "setAlign") {
+    setAlign(request.value);
+    sendResponse({status: `Space set to ${request.value}`});
+  }
+}
+);
+
+function setFont(fontValue) {
+  // Convert string to number if needed
+  alignValue = Number(fontValue);
+  console.log("[Accessibility] Setting zoom level to:", fontValue);
+  
+  // For example, update the contrast style based on a given value
+  // (This is just an example. You can customize your style as needed)
+  if (alignValue == 0) {
+    Remove_Custom_Style("__font");
+  } else if (alignValue == 1) {
+    Add_Custom_Style(`
+      @import url("https://fonts.googleapis.com/css?family=Raleway");
+
+      * {
+          font-family: "Comic Sans MS", "Comic Sans", cursive;
+      }
+    `, "__font");
+  } else if (alignValue == 2) {
+    Add_Custom_Style(`
+      @import url("https://fonts.googleapis.com/css?family=Raleway");
+
+      * {
+          font-family: "Comic Sans MS", "Comic Sans", cursive;
+      }
+    `, "__font");
+  } else if (alignValue == 3) {
+    Add_Custom_Style(`
+      @import url("https://fonts.googleapis.com/css?family=Raleway");
+
+      * {
+          font-family: "Comic Sans MS", "Comic Sans", cursive;
+      }
+    `, "__font");
+  } else if (alignValue == 4) {
+    Add_Custom_Style(`
+      @import url("https://fonts.googleapis.com/css?family=Raleway");
+
+      * {
+          font-family: "Comic Sans MS", "Comic Sans", cursive;
+      }
+    `, "__font");
+  }
+  else {
+    Add_Custom_Style(`
+      @import url("https://fonts.googleapis.com/css?family=Raleway");
+
+      * {
+          font-family: "Comic Sans MS", "Comic Sans", cursive;
+      }
+    `, "__font");
+  }
+}
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if(request.action === "setFont") {
+    setFont(request.value);
+    sendResponse({status: `Space set to ${request.value}`});
+  }
+}
+);
+
 // function toggleZoom() {
 //   isZoomed = !isZoomed;
 //   document.documentElement.classList.toggle('readable-zoom', isZoomed);

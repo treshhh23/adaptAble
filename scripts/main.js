@@ -14,17 +14,20 @@ sliderContrast.addEventListener('input', (event) => {
   });
 });
 
-  
-  document.getElementById("font-type").addEventListener('click', () => {
-    // Query the active tab
-    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-      const activeTab = tabs[0];
-      // Send a message to content.js in the active tab
-      chrome.tabs.sendMessage(activeTab.id, {action: "toggleReadableFont"}, (response) => {
-        console.log(response.status);
-      });
-    });
+const sliderFont = document.getElementById('font-select');
+sliderFont.addEventListener('input', (event) => {
+  const fontValue = event.target.value;
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const activeTab = tabs[0];
+    chrome.tabs.sendMessage(
+      activeTab.id, 
+      { action: 'setFont', value: fontValue },
+      (response) => {
+        console.log(response?.status);
+      }
+    );
   });
+});
 
   const sliderZoom = document.getElementById('browser-zoom');
   sliderZoom.addEventListener('input', (event) => {
@@ -49,7 +52,7 @@ const sliderSpacing = document.getElementById('text-spacing');
       const activeTab = tabs[0];
       chrome.tabs.sendMessage(
         activeTab.id, 
-        { action: 'slideText', value: textValue },
+        { action: 'setSpace', value: textValue },
         (response) => {
           console.log(response?.status);
         }
@@ -65,7 +68,7 @@ const sliderAlign = document.getElementById('line-spacing');
       const activeTab = tabs[0];
       chrome.tabs.sendMessage(
         activeTab.id, 
-        { action: 'slideAlign', value: slideAlign },
+        { action: 'setAlign', value: slideAlign },
         (response) => {
           console.log(response?.status);
         }
