@@ -3,11 +3,16 @@
     "description": "Use AI to adapt to each user for more accessible websites",
     "version": "1.0",
     "manifest_version": 3,
+    "web_accessible_resources": [
+    {
+      "resources": ["sql-wasm.wasm"],
+      "matches": ["<all_urls>"]
+    }
+  ],
     "action": {
       "default_popup": "main.html",
       "default_icon": "images/icon.png",
       "default_width": 340,
       "default_height": 300
     },
-    "content_scripts": [ { "matches": ["*://*.wikipedia.org/*"], "js": ["dbInit.js", "tf.min.js", "content.js"] } ]
-  }
+    "content_scripts": [ { "matches": ["*://*.wikipedia.org/*"], "js": ["sql-wasm.js", "content.js"] } ]  }
