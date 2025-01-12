@@ -1,11 +1,9 @@
+// For the slider that sets contrast
 const sliderContrast = document.getElementById('high-contrast');
-
 sliderContrast.addEventListener('input', (event) => {
   const contrastValue = event.target.value;
-
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const activeTab = tabs[0];
-
     chrome.tabs.sendMessage(
       activeTab.id, 
       { action: 'setHighContrast', value: contrastValue },
@@ -29,58 +27,52 @@ sliderContrast.addEventListener('input', (event) => {
   });
 
   const sliderZoom = document.getElementById('browser-zoom');
-
-  sliderContrast.addEventListener('input', (event) => {
-    const contrastValue = event.target.value;
-  
+  sliderZoom.addEventListener('input', (event) => {
+    const zoomValue = event.target.value;
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0];
-  
       chrome.tabs.sendMessage(
         activeTab.id, 
-        { action: 'toggleZoom', value: contrastValue },
+        { action: 'toggleZoom', value: zoomValue },
         (response) => {
           console.log(response?.status);
         }
       );
     });
   });
+  
 
 const sliderSpacing = document.getElementById('text-spacing');
-
-sliderContrast.addEventListener('input', (event) => {
-  const contrastValue = event.target.value;
-
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const activeTab = tabs[0];
-
-    chrome.tabs.sendMessage(
-      activeTab.id, 
-      { action: 'slideText', value: contrastValue },
-      (response) => {
-        console.log(response?.status);
-      }
-    );
+  sliderSpacing.addEventListener('input', (event) => {
+    const textValue = event.target.value;
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0];
+      chrome.tabs.sendMessage(
+        activeTab.id, 
+        { action: 'slideText', value: textValue },
+        (response) => {
+          console.log(response?.status);
+        }
+      );
+    });
   });
-});
+  
 
 const sliderAlign = document.getElementById('line-spacing');
-
-sliderContrast.addEventListener('input', (event) => {
-  const contrastValue = event.target.value;
-
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const activeTab = tabs[0];
-
-    chrome.tabs.sendMessage(
-      activeTab.id, 
-      { action: 'slideAlign', value: contrastValue },
-      (response) => {
-        console.log(response?.status);
-      }
-    );
+  sliderAlign.addEventListener('input', (event) => {
+    const slideAlign = event.target.value;
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0];
+      chrome.tabs.sendMessage(
+        activeTab.id, 
+        { action: 'slideAlign', value: slideAlign },
+        (response) => {
+          console.log(response?.status);
+        }
+      );
+    });
   });
-});
+  
 
 
   
