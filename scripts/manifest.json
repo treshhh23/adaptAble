@@ -3,6 +3,9 @@
     "description": "Use AI to adapt to each user for more accessible websites",
     "version": "1.0",
     "manifest_version": 3,
+    "permissions": [
+      "storage"
+    ],
     "web_accessible_resources": [
     {
       "resources": ["sql-wasm.wasm"],
