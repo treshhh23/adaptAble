@@ -1,32 +1,37 @@
-<html>
-  <head>
-    <script src="content.js" type="module"></script>
-    <link rel="stylesheet" href="main.css">
-  </head>
-  <body>
-    <h1 class="welcome-text">Welcome to AdaptAble</h1>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1 class="welcome-text">AdaptAble</h1>
+    <p class="subtitle">Personalize your browsing experience</p>
     <div class="option-container">
       <div class="option">
-        <span>High Contrast</span>
         <label class="switch">
-          <input type="checkbox">
+          <input type="checkbox" id="high-contrast">
           <span class="slider round"></span>
+          <span class="option-text high-contrast">High Contrast</span>
         </label>
       </div>
       <div class="option">
-        <span>Browser Zoom</span>
         <label class="switch">
-          <input type="checkbox">
+          <input type="checkbox" id="browser-zoom">
           <span class="slider round"></span>
+          <span class="option-text browser-zoom">Browser Zoom</span>
         </label>
       </div>
       <div class="option">
-        <span>Font Type</span>
         <label class="switch">
-          <input type="checkbox">
+          <input type="checkbox" id="font-type">
           <span class="slider round"></span>
+          <span class="option-text font-type">Font Type</span>
         </label>
       </div>
     </div>
-  </body>
+  </div>
+</body>
 </html>

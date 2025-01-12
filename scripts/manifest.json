@@ -9,10 +9,15 @@
       "matches": ["<all_urls>"]
     }
   ],
+    "icons": {
+    "1": "images/icon.png",
+    "16": "images/icon16.png"
+   },
     "action": {
       "default_popup": "main.html",
-      "default_icon": "images/icon.png",
-      "default_width": 340,
-      "default_height": 300
+      "default_icon": {
+      "1": "images/icon.png",
+      "16": "images/icon16.png"
+     }
     },
     "content_scripts": [ { "matches": ["*://*.wikipedia.org/*"], "js": ["sql-wasm.js", "content.js"] } ]  }
