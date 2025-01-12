@@ -33,7 +33,7 @@ sliderContrast.addEventListener('input', (event) => {
       const activeTab = tabs[0];
       chrome.tabs.sendMessage(
         activeTab.id, 
-        { action: 'toggleZoom', value: zoomValue },
+        { action: 'setZoom', value: zoomValue },
         (response) => {
           console.log(response?.status);
         }

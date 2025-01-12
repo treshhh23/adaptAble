@@ -79,13 +79,16 @@ function setHighContrast(contrastValue) {
   
   // For example, update the contrast style based on a given value
   // (This is just an example. You can customize your style as needed)
-  Add_Custom_Style(`
+  if(contrastValue != 0) {
+    Add_Custom_Style(`
     * {
         color: #FFFFFF !important;
         background-color: #121212 !important;
-        filter: contrast(${50 + contrastValue * 25}%);
     }
   `, "__contrast");
+    } else {
+      Remove_Custom_Style("__contrast")
+    }
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -126,28 +129,51 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-function toggleZoom() {
-  isZoomed = !isZoomed;
-  document.documentElement.classList.toggle('readable-zoom', isZoomed);
-  console.log("[Accessibility] Zoomed is now:", isZoomed);
 
-  if (isZoomed) {
-    Add_Custom_Style(`
+function setZoom(zoomValue) {
+  // Convert string to number if needed
+  zoomValue = Number(zoomValue);
+  console.log("[Accessibility] Setting zoom level to:", zoomValue);
+  
+  // For example, update the contrast style based on a given value
+  // (This is just an example. You can customize your style as needed)
+  Add_Custom_Style(`
     * {
-        zoom: 1.02;
+        zoom: ${1.0 + 0.01*zoomValue}
     }
-  `, "__zoom")
-  } else {
-    Remove_Custom_Style("__zoom");
-  }
+  `, "__zoom");
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "toggleZoom") {
-    toggleZoom();
-    sendResponse({status: "Zoom toggled"});
+  if(request.action === "setZoom") {
+    setZoom(request.value);
+    sendResponse({status: `Zoom set to ${request.value}`});
   }
-});
+}
+);
+
+// function toggleZoom() {
+//   isZoomed = !isZoomed;
+//   document.documentElement.classList.toggle('readable-zoom', isZoomed);
+//   console.log("[Accessibility] Zoomed is now:", isZoomed);
+
+//   if (isZoomed) {
+//     Add_Custom_Style(`
+//     * {
+//         zoom: 1.02;
+//     }
+//   `, "__zoom")
+//   } else {
+//     Remove_Custom_Style("__zoom");
+//   }
+// }
+
+// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+//   if (request.action === "toggleZoom") {
+//     toggleZoom();
+//     sendResponse({status: "Zoom toggled"});
+//   }
+// });
 
 (async function initAll() {
   await initDatabase();
