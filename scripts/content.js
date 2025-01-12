@@ -103,7 +103,30 @@ function toggleHighContrast() {
   isHighContrast = !isHighContrast;
   document.documentElement.classList.toggle('high-contrast', isHighContrast);
   console.log("[Accessibility] High Contrast is now:", isHighContrast);
+
+  if (isHighContrast) {
+    Add_Custom_Style(`
+      @import url("https://fonts.googleapis.com/css?family=Raleway");
+
+      * {
+          font-family: "Raleway" !important;
+          color: #00ff40 !important;
+          zoom: 1.05 !important;
+          background-color: #121212 !important; /* Dark mode background */
+      }
+
+
+  `)
+  }
 }
+
+// Listener for messages
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "toggleHighContrast") {
+    toggleHighContrast();
+    sendResponse({status: "High contrast toggled"});
+  }
+});
 
 
 /**
@@ -141,39 +164,11 @@ window.addEventListener('keydown', (e) => {
       * {
           font-family: "Raleway" !important;
           color: #00ff40 !important;
+          zoom: 1.05 !important;
+          background-color: #121212 !important; /* Dark mode background */
       }
 
-      ytd-channel-about-metadata-renderer {
-          zoom: 1.6;
-      }
 
-      #meta.ytd-c4-tabbed-header-renderer {
-          zoom: 1.3;
-      }
-
-      #js-custom-element {
-          font-size: 60px;
-          padding: 150px 0;
-          color: #ff0037 !important;
-          background-color: #fffffff2;
-          position: fixed;
-          top: 0;
-          text-align: center;
-          width: 100%;
-          z-index: 999999;
-      }
-
-      .js-custom-element {
-          font-size: 60px;
-          padding: 150px 0;
-          color: #008dff !important;
-          background-color: #fffffff2;
-          position: fixed;
-          bottom: 0;
-          text-align: center;
-          width: 100%;
-          z-index: 999999;
-      }
   `)
   }
 });
