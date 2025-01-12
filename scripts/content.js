@@ -8,7 +8,6 @@
  *    SQLite DB (sql.js), no TensorFlow usage.
  ******************************************************************************/
 
-
 /////////////////////
 // Global Variables //
 /////////////////////
@@ -128,7 +127,7 @@ function toggleHighContrast() {
   if (isHighContrast) {
     Add_Custom_Style(`
       * {
-          color: #00ff40 !important;
+          color: #FFFFFF !important;
           background-color: #121212 !important; /* Dark mode background */
       }
 
@@ -190,7 +189,7 @@ function toggleZoom() {
   if (isZoomed) {
     Add_Custom_Style(`
     * {
-        zoom: 1.05;
+        zoom: 1.02;
     }
   `, "__zoom")
   } else {
