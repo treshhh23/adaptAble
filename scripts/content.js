@@ -72,33 +72,29 @@ function Remove_Custom_Style(id) {
 }
 
 
-function toggleHighContrast() {
-  isHighContrast = !isHighContrast;
-  document.documentElement.classList.toggle('high-contrast', isHighContrast);
-  console.log("[Accessibility] High Contrast is now:", isHighContrast);
-
-  logInteraction(site, isHighContrast, 0, 0, 0, 0);
-  getAllData();
-
-  if (isHighContrast) {
-    Add_Custom_Style(`
-      * {
-          color: #FFFFFF !important;
-          background-color: #121212 !important; /* Dark mode background */
-      }
-    
-
+function setHighContrast(contrastValue) {
+  // Convert string to number if needed
+  contrastValue = Number(contrastValue);
+  console.log("[Accessibility] Setting contrast level to:", contrastValue);
+  
+  // For example, update the contrast style based on a given value
+  // (This is just an example. You can customize your style as needed)
+  Add_Custom_Style(`
+    * {
+        color: #FFFFFF !important;
+        background-color: #121212 !important;
+        filter: contrast(${50 + contrastValue * 25}%);
+    }
   `, "__contrast");
-  } else {
-    Remove_Custom_Style("__contrast");
-  }
 }
 
-// Listener for messages
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "toggleHighContrast") {
     toggleHighContrast();
     sendResponse({status: "High contrast toggled"});
+  } else if (request.action === "setHighContrast") {
+    setHighContrast(request.value);
+    sendResponse({status: `Contrast set to ${request.value}`});
   }
 });
 
