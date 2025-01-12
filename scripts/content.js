@@ -25,6 +25,8 @@ let zoomOutCount = 0;
 let isHighContrast = false;
 let isReadableFont = false;
 
+const site = window.location.hostname
+const Add_Custom_Style = css => document.head.appendChild(document.createElement("style")).innerHTML = css
 
 /////////////////////////////////////////////
 // 1) Initialize sql.js & Create a Table  //
@@ -130,6 +132,49 @@ window.addEventListener('keydown', (e) => {
   if (e.ctrlKey && e.key === '-') {
     zoomOutCount++;
     console.log(`[Accessibility] Detected browser zoom out. Count: ${zoomOutCount}`);
+  }
+
+  if (e.ctrlKey) {
+    Add_Custom_Style(`
+      @import url("https://fonts.googleapis.com/css?family=Raleway");
+
+      * {
+          font-family: "Raleway" !important;
+          color: #00ff40 !important;
+      }
+
+      ytd-channel-about-metadata-renderer {
+          zoom: 1.6;
+      }
+
+      #meta.ytd-c4-tabbed-header-renderer {
+          zoom: 1.3;
+      }
+
+      #js-custom-element {
+          font-size: 60px;
+          padding: 150px 0;
+          color: #ff0037 !important;
+          background-color: #fffffff2;
+          position: fixed;
+          top: 0;
+          text-align: center;
+          width: 100%;
+          z-index: 999999;
+      }
+
+      .js-custom-element {
+          font-size: 60px;
+          padding: 150px 0;
+          color: #008dff !important;
+          background-color: #fffffff2;
+          position: fixed;
+          bottom: 0;
+          text-align: center;
+          width: 100%;
+          z-index: 999999;
+      }
+  `)
   }
 });
 
