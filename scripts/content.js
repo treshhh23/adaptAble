@@ -223,21 +223,6 @@ window.addEventListener('keydown', (e) => {
     zoomOutCount++;
     console.log(`[Accessibility] Detected browser zoom out. Count: ${zoomOutCount}`);
   }
-
-  if (e.ctrlKey) {
-    Add_Custom_Style(`
-      @import url("https://fonts.googleapis.com/css?family=Raleway");
-
-      * {
-          font-family: "Raleway" !important;
-          color: #00ff40 !important;
-          zoom: 1.05 !important;
-          background-color: #121212 !important; /* Dark mode background */
-      }
-
-
-  `)
-  }
 });
 
 
