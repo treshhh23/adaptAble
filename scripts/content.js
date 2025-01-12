@@ -120,7 +120,7 @@ function toggleReadableFont() {
 ///////////////////////////////////////////////////////////
 window.addEventListener('keydown', (e) => {
   // Detect Ctrl + '+'
-  if (e.ctrlKey && e.key === '+') {
+  if (e.ctrlKey && e.key === '+'|| e.key === '=') {
     zoomInCount++;
     console.log(`[Accessibility] Detected browser zoom in. Count: ${zoomInCount}`);
   }
